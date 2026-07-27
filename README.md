@@ -167,9 +167,9 @@ The final lighting pass is much cheaper in Deferred mode than in Forward mode
 in the same capture setup:
 
 ```text
-Deferred lighting: 200+ (RenderDoc-reported duration)
-Forward lighting:  800+ (RenderDoc-reported duration)
-Voxelization:       8 ms+
+Deferred lighting: 0.2 ms+
+Forward lighting:  0.8 ms+
+Voxelization:      8 ms+
 ```
 
 The exact numbers depend on the GPU, resolution, model, shadow settings, and
