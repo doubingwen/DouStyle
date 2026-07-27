@@ -43,6 +43,120 @@ The current Visual Studio project expects the existing third-party libraries
 under `../VXGI-Renderer/vendor` and the Sponza model under
 `../VXGI-Renderer/model/sponza_pbr/glTF/Sponza.gltf`.
 
+## Adding a Render Pass
+
+DouStyle keeps passes as small, independent C++ classes. There is no required
+base class: a pass normally owns its shader and OpenGL resources, exposes an
+`initialize()` function, and provides a `render()` function that receives the
+resources it needs from earlier passes.
+
+### 1. Create the pass class
+
+For example, create `Graphics/Passes/MyPass.h`:
+
+```cpp
+#pragma once
+
+#include "../Shader.h"
+
+#include <string>
+
+class MyPass {
+public:
+    bool initialize(const std::string& vertexShader,
+        const std::string& fragmentShader);
+
+    void render(GLuint inputTexture, int width, int height);
+
+private:
+    Shader shader;
+    GLuint emptyVao = 0;
+};
+```
+
+Then implement the OpenGL setup and draw call in `MyPass.cpp`:
+
+```cpp
+#include "MyPass.h"
+
+bool MyPass::initialize(const std::string& vertexShader,
+    const std::string& fragmentShader)
+{
+    shader = Shader(vertexShader.c_str(), fragmentShader.c_str());
+    glGenVertexArrays(1, &emptyVao);
+    return true;
+}
+
+void MyPass::render(GLuint inputTexture, int width, int height)
+{
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glViewport(0, 0, width, height);
+    glDisable(GL_DEPTH_TEST);
+
+    shader.bind();
+    shader.setUniform1i("InputTexture", 0);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, inputTexture);
+
+    glBindVertexArray(emptyVao);
+    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glBindVertexArray(0);
+}
+```
+
+For a geometry pass, replace the fullscreen triangle with model drawing and
+attach the pass-owned framebuffer before rendering.
+
+### 2. Add the shaders
+
+Put the shaders in `Assets/Shaders/`, then initialize the pass from `main.cpp`:
+
+```cpp
+MyPass myPass;
+myPass.initialize(
+    AssetPath(root, "my_pass.vert").string(),
+    AssetPath(root, "my_pass.frag").string());
+```
+
+`AssetPath()` resolves shader files relative to the DouStyle project directory.
+
+### 3. Insert the pass into the frame
+
+Passes are executed explicitly in `main.cpp`, so place the new call after the
+passes that produce its inputs:
+
+```cpp
+glPushDebugGroup(GL_DEBUG_SOURCE_APPLICATION, 0, -1, "MyPass");
+myPass.render(
+    gBufferPass.getAlbedoMetallicTexture(),
+    WindowWidth,
+    WindowHeight);
+glPopDebugGroup();
+```
+
+Typical ordering is:
+
+```text
+ShadowPass
+    -> GBufferPass
+    -> VoxelizationPass
+    -> MyPass
+    -> DeferredLightingPass
+```
+
+Passes should receive textures or data from earlier passes through their public
+getters instead of reaching into another pass's private OpenGL state.
+
+### 4. Register files in Visual Studio
+
+Add the new `.cpp` file to the `ClCompile` section of `DouStyle.vcxproj`, the
+`.h` file to the `ClInclude` section, and add both files to
+`DouStyle.vcxproj.filters` if you want them to appear in the correct Solution
+Explorer folder. Shader files belong in the `None` section of the project file.
+
+After that, rebuild `DouStyle.sln`. Use RenderDoc markers around the new pass
+so its GPU work is easy to find in the Event Browser.
+
 ## Screenshots
 
 Add screenshots here later, for example:
