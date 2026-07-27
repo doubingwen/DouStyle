@@ -179,21 +179,28 @@ frame time than changing only the final lighting pass.
 
 ## Screenshots
 
-### Voxel direct radiance
-
-![Voxel direct radiance](picturs/Voxel_Direct.png)
-
-### Final result
-
-![Final result](picturs/result.png)
-
-### Indirect diffuse
-
-![Indirect diffuse](picturs/indirect%28diffuse%29.png)
-
-### Indirect diffuse and specular
-
-![Indirect diffuse and specular](picturs/indirect%28diffusse%2Bspecular%29.png)
+<table>
+  <tr>
+    <td align="center" width="50%">
+      <strong>Voxel direct radiance</strong><br>
+      <img src="picturs/Voxel_Direct.png" alt="Voxel direct radiance" width="100%">
+    </td>
+    <td align="center" width="50%">
+      <strong>Final result</strong><br>
+      <img src="picturs/result.png" alt="Final result" width="100%">
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="50%">
+      <strong>Indirect diffuse</strong><br>
+      <img src="picturs/indirect%28diffuse%29.png" alt="Indirect diffuse" width="100%">
+    </td>
+    <td align="center" width="50%">
+      <strong>Indirect diffuse and specular</strong><br>
+      <img src="picturs/indirect%28diffusse%2Bspecular%29.png" alt="Indirect diffuse and specular" width="100%">
+    </td>
+  </tr>
+</table>
 
 ## Notes
 
