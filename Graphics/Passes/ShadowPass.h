@@ -2,6 +2,7 @@
 
 #include "../Model.h"
 #include "../Shader.h"
+#include "../Light.h"
 
 #include <GL/glew.h>
 #include <glm.hpp>
@@ -12,7 +13,8 @@ class ShadowPass {
 public:
     ~ShadowPass();
     bool initialize(const std::string& vertexShader, const std::string& fragmentShader,
-        const glm::vec3& lightDirection, int resolution = 4096);
+        const Light& light, int resolution = 4096);
+    void updateLight(const Light& light);
     void render(Model& model, const glm::mat4& modelMatrix);
     GLuint getDepthTexture() const { return depthTexture; }
     GLuint getDepthColorTexture() const { return depthColorTexture; }

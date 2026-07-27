@@ -10,6 +10,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Core\Application.cpp"><Filter>Core</Filter></ClCompile>
     <ClCompile Include="Graphics\Camera.cpp"><Filter>Graphics</Filter></ClCompile>
+    <ClCompile Include="Graphics\Light.cpp"><Filter>Graphics</Filter></ClCompile>
     <ClCompile Include="Graphics\Material.cpp"><Filter>Graphics</Filter></ClCompile>
     <ClCompile Include="Graphics\Mesh.cpp"><Filter>Graphics</Filter></ClCompile>
     <ClCompile Include="Graphics\Model.cpp"><Filter>Graphics</Filter></ClCompile>
@@ -25,6 +26,7 @@
   <ItemGroup>
     <ClInclude Include="Core\Application.h"><Filter>Core</Filter></ClInclude>
     <ClInclude Include="Graphics\Camera.h"><Filter>Graphics</Filter></ClInclude>
+    <ClInclude Include="Graphics\Light.h"><Filter>Graphics</Filter></ClInclude>
     <ClInclude Include="Graphics\DebugMarkers.h"><Filter>Graphics</Filter></ClInclude>
     <ClInclude Include="Graphics\Material.h"><Filter>Graphics</Filter></ClInclude>
     <ClInclude Include="Graphics\Mesh.h"><Filter>Graphics</Filter></ClInclude>

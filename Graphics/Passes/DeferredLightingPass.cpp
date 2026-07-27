@@ -17,7 +17,7 @@ bool DeferredLightingPass::initialize(const std::string& vertexShader, const std
 
 void DeferredLightingPass::render(const GBufferPass& gBuffer, const Camera& camera,
     const ShadowPass& shadowPass, const VoxelizationPass& voxelPass,
-    const glm::vec3& lightDirection, bool showDirect, bool showIndirect,
+    const Light& light, bool showDirect, bool showIndirect,
     bool showSpecular, bool showAo)
 {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -31,6 +31,7 @@ void DeferredLightingPass::render(const GBufferPass& gBuffer, const Camera& came
     shader.bind();
     const glm::vec3 cameraPosition = camera.getPosition();
     shader.setUniform3f("CameraPosition", cameraPosition.x, cameraPosition.y, cameraPosition.z);
+    const glm::vec3 lightDirection = light.getDirection();
     shader.setUniform3f("ToLightDirection", lightDirection.x, lightDirection.y, lightDirection.z);
     shader.setUniformMatrix4fv("LightSpaceMatrix", shadowPass.getLightSpaceMatrix());
     shader.setUniform1i("VoxelDimensions", voxelPass.getResolution());

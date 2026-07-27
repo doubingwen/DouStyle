@@ -1,6 +1,7 @@
 #include "Core/Application.h"
 #include "Graphics/Camera.h"
 #include "Graphics/DebugMarkers.h"
+#include "Graphics/Light.h"
 #include "Graphics/Model.h"
 #include "Graphics/Passes/GBufferPass.h"
 #include "Graphics/Passes/GBufferDebugPass.h"
@@ -11,8 +12,10 @@
 #include "Graphics/Passes/VoxelizationPass.h"
 
 #include <glm.hpp>
+#include <gtc/constants.hpp>
 #include <gtc/matrix_transform.hpp>
 
+#include <cmath>
 #include <filesystem>
 #include <iostream>
 
@@ -20,6 +23,7 @@ namespace {
 
 constexpr int WindowWidth = 1280;
 constexpr int WindowHeight = 720;
+constexpr float LightOrbitPeriodSeconds = 20.0f;
 
 struct SceneState {
     Camera* camera = nullptr;
@@ -102,7 +106,8 @@ int main()
     if (!application.initialize()) return 1;
 
     const std::filesystem::path root = std::filesystem::path(__FILE__).parent_path();
-    const glm::vec3 lightDirection(-0.3f, 0.9f, -0.25f);
+    Light light = Light::createDirectional(
+        glm::vec3(-0.3f, 0.9f, -0.25f), glm::vec3(1.0f), 1.0f);
     const glm::mat4 modelMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(0.05f));
 
     Camera camera(glm::vec3(0.0f, 10.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f),
@@ -122,7 +127,7 @@ int main()
 
     ShadowPass shadowPass;
     if (!shadowPass.initialize(AssetPath(root, "shadowMap.vert").string(),
-        AssetPath(root, "shadowMap.frag").string(), lightDirection)) return 1;
+        AssetPath(root, "shadowMap.frag").string(), light)) return 1;
 
     VoxelizationPass voxelizationPass;
     if (!voxelizationPass.initialize(AssetPath(root, "voxelization.vert").string(),
@@ -177,6 +182,18 @@ int main()
         }
         UpdateCamera(application.getWindow(), camera, deltaTime);
 
+        // Move the directional light around the scene with a stable period.
+        const float lightAngle = static_cast<float>(currentTime) *
+            glm::two_pi<float>() / LightOrbitPeriodSeconds;
+        const float horizontalX = -0.3f;
+        const float horizontalZ = -0.25f;
+        const float animatedX = horizontalX * std::cos(lightAngle) -
+            horizontalZ * std::sin(lightAngle);
+        const float animatedZ = horizontalX * std::sin(lightAngle) +
+            horizontalZ * std::cos(lightAngle);
+        light.setDirection(glm::vec3(animatedX, 0.9f, animatedZ));
+        shadowPass.updateLight(light);
+
         DebugMarkers::Push("Frame");
         DebugMarkers::Push("ShadowPass");
         shadowPass.render(model, modelMatrix);
@@ -187,7 +204,7 @@ int main()
         DebugMarkers::Pop();
 
         DebugMarkers::Push("VoxelizationPass");
-        voxelizationPass.render(model, modelMatrix, shadowPass, lightDirection);
+        voxelizationPass.render(model, modelMatrix, shadowPass, light);
         DebugMarkers::Pop();
 
         if (state.showGBuffer) {
@@ -202,13 +219,13 @@ int main()
             if (state.useDeferred) {
                 DebugMarkers::Push("DeferredLightingPass");
                 deferredLightingPass.render(gBufferPass, camera, shadowPass, voxelizationPass,
-                    lightDirection, state.showDirect, state.showDiffuse,
+                    light, state.showDirect, state.showDiffuse,
                     state.showSpecular, state.showAo);
                 DebugMarkers::Pop();
             } else {
                 DebugMarkers::Push("ForwardLightingPass");
                 lightingPass.render(model, modelMatrix, camera, shadowPass, voxelizationPass,
-                    lightDirection, state.showDirect, state.showDiffuse,
+                    light, state.showDirect, state.showDiffuse,
                     state.showSpecular, state.showAo);
                 DebugMarkers::Pop();
             }

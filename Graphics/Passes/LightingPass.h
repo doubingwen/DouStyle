@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Camera.h"
+#include "../Light.h"
 #include "../Model.h"
 #include "../Shader.h"
 #include "ShadowPass.h"
@@ -15,7 +16,7 @@ public:
     bool initialize(const std::string& vertexShader, const std::string& fragmentShader);
     void render(Model& model, const glm::mat4& modelMatrix, const Camera& camera,
         const ShadowPass& shadowPass, const VoxelizationPass& voxelPass,
-        const glm::vec3& lightDirection, bool showDirect, bool showDiffuse,
+        const Light& light, bool showDirect, bool showDiffuse,
         bool showSpecular, bool showAo);
 
 private:

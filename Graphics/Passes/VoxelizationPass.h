@@ -2,6 +2,7 @@
 
 #include "../Model.h"
 #include "../Shader.h"
+#include "../Light.h"
 #include "ShadowPass.h"
 
 #include <GL/glew.h>
@@ -16,7 +17,7 @@ public:
         const std::string& fragmentShader, const std::string& resolveShader,
         int resolution = 512, float totalSize = 150.0f);
     void render(Model& model, const glm::mat4& modelMatrix, const ShadowPass& shadowPass,
-        const glm::vec3& lightDirection);
+        const Light& light);
     GLuint getVoxelTexture() const { return voxelTexture; }
     int getResolution() const { return resolution; }
     float getTotalSize() const { return totalSize; }

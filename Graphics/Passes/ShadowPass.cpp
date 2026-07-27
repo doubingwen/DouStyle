@@ -12,15 +12,17 @@ ShadowPass::~ShadowPass()
 }
 
 bool ShadowPass::initialize(const std::string& vertexShader, const std::string& fragmentShader,
-    const glm::vec3& lightDirection, int inResolution)
+    const Light& light, int inResolution)
 {
+    if (!light.isDirectional()) {
+        std::cerr << "ShadowPass currently supports directional lights only\n";
+        return false;
+    }
+
     resolution = inResolution;
     shader = Shader(vertexShader.c_str(), fragmentShader.c_str());
 
-    // Keep the original Dou light-space construction unchanged.
-    const glm::mat4 lightView = glm::lookAt(lightDirection, glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-    const glm::mat4 lightProjection = glm::ortho(-100.0f, 100.0f, -100.0f, 100.0f, -150.0f, 50.0f);
-    lightSpaceMatrix = lightProjection * lightView;
+    updateLight(light);
 
     glGenFramebuffers(1, &framebuffer);
     DebugMarkers::Label(GL_FRAMEBUFFER, framebuffer, "Dou ShadowPass FBO");
@@ -49,6 +51,19 @@ bool ShadowPass::initialize(const std::string& vertexShader, const std::string& 
     if (!complete) std::cerr << "Error creating shadow map framebuffer\n";
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     return complete;
+}
+
+void ShadowPass::updateLight(const Light& light)
+{
+    if (!light.isDirectional()) {
+        std::cerr << "ShadowPass currently supports directional lights only\n";
+        return;
+    }
+
+    // Keep the original Dou light-space construction unchanged.
+    const glm::mat4 lightView = glm::lookAt(light.getDirection(), glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    const glm::mat4 lightProjection = glm::ortho(-100.0f, 100.0f, -100.0f, 100.0f, -150.0f, 50.0f);
+    lightSpaceMatrix = lightProjection * lightView;
 }
 
 void ShadowPass::render(Model& model, const glm::mat4& modelMatrix)

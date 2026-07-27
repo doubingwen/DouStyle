@@ -70,7 +70,7 @@ bool VoxelizationPass::initialize(const std::string& vertexShader, const std::st
 }
 
 void VoxelizationPass::render(Model& model, const glm::mat4& modelMatrix,
-    const ShadowPass& shadowPass, const glm::vec3& lightDirection)
+    const ShadowPass& shadowPass, const Light& light)
 {
     const float size = totalSize;
     const glm::mat4 projection = glm::ortho(-size * 0.5f, size * 0.5f,
@@ -100,6 +100,7 @@ void VoxelizationPass::render(Model& model, const glm::mat4& modelMatrix,
     shader.setUniformMatrix4fv("ProjectionFromYAxis", projectionY);
     shader.setUniformMatrix4fv("ProjectionFromZAxis", projectionZ);
     shader.setUniform1i("VoxelDimensions", resolution);
+    const glm::vec3 lightDirection = light.getDirection();
     shader.setUniform3f("ToLightDirection", lightDirection.x, lightDirection.y, lightDirection.z);
     shader.setUniform1i("ShadowMap", 5);
 
