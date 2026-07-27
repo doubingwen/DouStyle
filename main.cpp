@@ -98,7 +98,7 @@ const char* GBufferModeName(int mode)
 
 int main()
 {
-    Application application(WindowWidth, WindowHeight, "ZJU VXGI - DouStyle");
+    Application application(WindowWidth, WindowHeight, "Dou VXGI - DouStyle");
     if (!application.initialize()) return 1;
 
     const std::filesystem::path root = std::filesystem::path(__FILE__).parent_path();

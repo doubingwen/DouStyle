@@ -19,7 +19,7 @@ bool GBufferPass::initialize(const std::string& vertexShader, const std::string&
 
     glGenFramebuffers(1, &framebuffer);
     glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
-    DebugMarkers::Label(GL_FRAMEBUFFER, framebuffer, "ZJU GBuffer Framebuffer");
+    DebugMarkers::Label(GL_FRAMEBUFFER, framebuffer, "Dou GBuffer Framebuffer");
 
     GLuint* colorTexturePointers[] = {
         &positionTexture,
@@ -28,10 +28,10 @@ bool GBufferPass::initialize(const std::string& vertexShader, const std::string&
         &emissionTexture
     };
     const char* labels[] = {
-        "ZJU GBuffer Position",
-        "ZJU GBuffer Normal Roughness",
-        "ZJU GBuffer Albedo Metallic",
-        "ZJU GBuffer Emission"
+        "Dou GBuffer Position",
+        "Dou GBuffer Normal Roughness",
+        "Dou GBuffer Albedo Metallic",
+        "Dou GBuffer Emission"
     };
 
     GLuint textureIds[4] = {};
@@ -58,7 +58,7 @@ bool GBufferPass::initialize(const std::string& vertexShader, const std::string&
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, width, height);
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
         GL_RENDERBUFFER, depthRenderbuffer);
-    DebugMarkers::Label(GL_RENDERBUFFER, depthRenderbuffer, "ZJU GBuffer Depth");
+    DebugMarkers::Label(GL_RENDERBUFFER, depthRenderbuffer, "Dou GBuffer Depth");
 
     const std::array<GLenum, 4> drawBuffers = {
         GL_COLOR_ATTACHMENT0,

@@ -156,6 +156,27 @@ Explorer folder. Shader files belong in the `None` section of the project file.
 After that, rebuild `DouStyle.sln`. Use RenderDoc markers around the new pass
 so its GPU work is easy to find in the Event Browser.
 
+## Performance Notes
+
+Initial RenderDoc captures show that the main pipeline bottleneck is the
+voxelization stage. In the tested scene, voxelization takes a little over
+`8 ms` per frame, including the voxel injection work and its related resolve
+and mipmap operations.
+
+The final lighting pass is much cheaper in Deferred mode than in Forward mode
+in the same capture setup:
+
+```text
+Deferred lighting: 200+ (RenderDoc-reported duration)
+Forward lighting:  800+ (RenderDoc-reported duration)
+Voxelization:       8 ms+
+```
+
+The exact numbers depend on the GPU, resolution, model, shadow settings, and
+RenderDoc capture configuration. Since voxelization is currently performed
+every frame, optimizing or caching that pass has a larger effect on total
+frame time than changing only the final lighting pass.
+
 ## Screenshots
 
 Add screenshots here later, for example:

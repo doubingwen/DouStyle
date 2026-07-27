@@ -17,16 +17,16 @@ bool ShadowPass::initialize(const std::string& vertexShader, const std::string& 
     resolution = inResolution;
     shader = Shader(vertexShader.c_str(), fragmentShader.c_str());
 
-    // Keep the original ZJU light-space construction unchanged.
+    // Keep the original Dou light-space construction unchanged.
     const glm::mat4 lightView = glm::lookAt(lightDirection, glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
     const glm::mat4 lightProjection = glm::ortho(-100.0f, 100.0f, -100.0f, 100.0f, -150.0f, 50.0f);
     lightSpaceMatrix = lightProjection * lightView;
 
     glGenFramebuffers(1, &framebuffer);
-    DebugMarkers::Label(GL_FRAMEBUFFER, framebuffer, "ZJU ShadowPass FBO");
+    DebugMarkers::Label(GL_FRAMEBUFFER, framebuffer, "Dou ShadowPass FBO");
     glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
     glGenTextures(1, &depthTexture);
-    DebugMarkers::Label(GL_TEXTURE, depthTexture, "ZJU ShadowMap Depth");
+    DebugMarkers::Label(GL_TEXTURE, depthTexture, "Dou ShadowMap Depth");
     glBindTexture(GL_TEXTURE_2D, depthTexture);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, resolution, resolution, 0, GL_DEPTH_COMPONENT, GL_FLOAT, nullptr);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -38,7 +38,7 @@ bool ShadowPass::initialize(const std::string& vertexShader, const std::string& 
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTexture, 0);
 
     glGenTextures(1, &depthColorTexture);
-    DebugMarkers::Label(GL_TEXTURE, depthColorTexture, "ZJU ShadowMap Encoded Depth");
+    DebugMarkers::Label(GL_TEXTURE, depthColorTexture, "Dou ShadowMap Encoded Depth");
     glBindTexture(GL_TEXTURE_2D, depthColorTexture);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, resolution, resolution, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);

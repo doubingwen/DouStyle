@@ -11,7 +11,7 @@ bool DeferredLightingPass::initialize(const std::string& vertexShader, const std
 {
     shader = Shader(vertexShader.c_str(), fragmentShader.c_str());
     glGenVertexArrays(1, &emptyVao);
-    DebugMarkers::Label(GL_VERTEX_ARRAY, emptyVao, "ZJU Deferred Lighting VAO");
+    DebugMarkers::Label(GL_VERTEX_ARRAY, emptyVao, "Dou Deferred Lighting VAO");
     return true;
 }
 

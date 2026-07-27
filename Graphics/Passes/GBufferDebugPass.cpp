@@ -11,7 +11,7 @@ bool GBufferDebugPass::initialize(const std::string& vertexShader, const std::st
 {
     shader = Shader(vertexShader.c_str(), fragmentShader.c_str());
     glGenVertexArrays(1, &emptyVao);
-    DebugMarkers::Label(GL_VERTEX_ARRAY, emptyVao, "ZJU GBuffer Debug VAO");
+    DebugMarkers::Label(GL_VERTEX_ARRAY, emptyVao, "Dou GBuffer Debug VAO");
     return true;
 }
 

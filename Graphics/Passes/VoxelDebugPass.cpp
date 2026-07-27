@@ -12,7 +12,7 @@ bool VoxelDebugPass::initialize(const std::string& vertexShader, const std::stri
 {
     shader = Shader(vertexShader.c_str(), fragmentShader.c_str(), geometryShader.c_str());
     glGenVertexArrays(1, &emptyVao);
-    DebugMarkers::Label(GL_VERTEX_ARRAY, emptyVao, "ZJU Voxel Debug VAO");
+    DebugMarkers::Label(GL_VERTEX_ARRAY, emptyVao, "Dou Voxel Debug VAO");
     return true;
 }
 

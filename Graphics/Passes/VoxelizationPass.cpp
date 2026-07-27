@@ -21,7 +21,7 @@ bool VoxelizationPass::initialize(const std::string& vertexShader, const std::st
     if (!resolveShader.loadCompute(resolveShaderPath.c_str())) return false;
 
     glGenTextures(1, &voxelTexture);
-    DebugMarkers::Label(GL_TEXTURE, voxelTexture, "ZJU Voxel Texture RGBA8");
+    DebugMarkers::Label(GL_TEXTURE, voxelTexture, "Dou Voxel Texture RGBA8");
     glBindTexture(GL_TEXTURE_3D, voxelTexture);
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -36,10 +36,10 @@ bool VoxelizationPass::initialize(const std::string& vertexShader, const std::st
 
     GLuint accumulationTextures[4] = {};
     const char* accumulationLabels[] = {
-        "ZJU Voxel Sum R",
-        "ZJU Voxel Sum G",
-        "ZJU Voxel Sum B",
-        "ZJU Voxel Sample Count"
+        "Dou Voxel Sum R",
+        "Dou Voxel Sum G",
+        "Dou Voxel Sum B",
+        "Dou Voxel Sample Count"
     };
     glGenTextures(4, accumulationTextures);
     voxelSumR = accumulationTextures[0];
@@ -64,7 +64,7 @@ bool VoxelizationPass::initialize(const std::string& vertexShader, const std::st
     glTexStorage3D(GL_TEXTURE_3D, 1, GL_R32UI, resolution, resolution, resolution);
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    DebugMarkers::Label(GL_TEXTURE, packedVoxelTexture, "ZJU Packed Atomic Voxel RGBA8 Average");
+    DebugMarkers::Label(GL_TEXTURE, packedVoxelTexture, "Dou Packed Atomic Voxel RGBA8 Average");
     glBindTexture(GL_TEXTURE_3D, 0);
     return true;
 }
