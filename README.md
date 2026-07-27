@@ -179,12 +179,21 @@ frame time than changing only the final lighting pass.
 
 ## Screenshots
 
-Add screenshots here later, for example:
+### Voxel direct radiance
 
-```markdown
-![Deferred lighting](images/deferred-lighting.png)
-![Voxel debug](images/voxel-debug.png)
-```
+![Voxel direct radiance](picturs/Voxel_Direct.png)
+
+### Final result
+
+![Final result](picturs/result.png)
+
+### Indirect diffuse
+
+![Indirect diffuse](picturs/indirect%28diffuse%29.png)
+
+### Indirect diffuse and specular
+
+![Indirect diffuse and specular](picturs/indirect%28diffusse%2Bspecular%29.png)
 
 ## Notes
 
