@@ -40,8 +40,7 @@ Open `DouStyle.sln` with Visual Studio and build the `Debug|x64` or
 `Release|x64` configuration.
 
 The current Visual Studio project keeps its third-party libraries under
-`ThirdParty/`. The Sponza model is expected under
-`../VXGI-Renderer/model/sponza_pbr/glTF/Sponza.gltf`.
+`ThirdParty/`.
 
 ## Adding a Render Pass
 
