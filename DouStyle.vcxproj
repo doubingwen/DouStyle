@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64"><Configuration>Debug</Configuration><Platform>x64</Platform></ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64"><Configuration>Release</Configuration><Platform>x64</Platform></ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <ProjectGuid>{9F6A5C4E-8B67-44BD-A5A2-30B1C3C7D5B1}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>DouStyle</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration"><ConfigurationType>Application</ConfigurationType><UseDebugLibraries>true</UseDebugLibraries><PlatformToolset>v143</PlatformToolset><CharacterSet>Unicode</CharacterSet></PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration"><ConfigurationType>Application</ConfigurationType><UseDebugLibraries>false</UseDebugLibraries><PlatformToolset>v143</PlatformToolset><WholeProgramOptimization>true</WholeProgramOptimization><CharacterSet>Unicode</CharacterSet></PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="Shared" />
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'"><Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" /></ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'"><Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" /></ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup><OutDir>$(ProjectDir)x64\$(Configuration)\</OutDir><IntDir>$(ProjectDir)x64\$(Configuration)\obj\DouStyle\</IntDir><TargetName>DouStyle</TargetName></PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)Core;$(ProjectDir)Graphics;$(ProjectDir)..\VXGI-Renderer\vendor\glfw\include;$(ProjectDir)..\VXGI-Renderer\vendor\glew\include;$(ProjectDir)..\VXGI-Renderer\vendor\assimp\include;$(ProjectDir)..\VXGI-Renderer\vendor\glm;$(ProjectDir)..\VXGI-Renderer\vendor\stb;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>opengl32.lib;$(ProjectDir)..\VXGI-Renderer\vendor\glfw\lib-vc2022\glfw3.lib;$(ProjectDir)..\VXGI-Renderer\vendor\glew\lib\glew32s.lib;$(ProjectDir)..\VXGI-Renderer\vendor\assimp\lib\assimp-vc143-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent><Command>copy /Y "$(ProjectDir)..\VXGI-Renderer\vendor\assimp\lib\assimp-vc143-mtd.dll" "$(TargetDir)"</Command></PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Core\Application.cpp" />
+    <ClCompile Include="Graphics\Camera.cpp" />
+    <ClCompile Include="Graphics\Material.cpp" />
+    <ClCompile Include="Graphics\Mesh.cpp" />
+    <ClCompile Include="Graphics\Model.cpp" />
+    <ClCompile Include="Graphics\Shader.cpp" />
+    <ClCompile Include="Graphics\Passes\GBufferPass.cpp" />
+    <ClCompile Include="Graphics\Passes\GBufferDebugPass.cpp" />
+    <ClCompile Include="Graphics\Passes\DeferredLightingPass.cpp" />
+    <ClCompile Include="Graphics\Passes\LightingPass.cpp" />
+    <ClCompile Include="Graphics\Passes\ShadowPass.cpp" />
+    <ClCompile Include="Graphics\Passes\VoxelDebugPass.cpp" />
+    <ClCompile Include="Graphics\Passes\VoxelizationPass.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Core\Application.h" />
+    <ClInclude Include="Graphics\Camera.h" />
+    <ClInclude Include="Graphics\DebugMarkers.h" />
+    <ClInclude Include="Graphics\Material.h" />
+    <ClInclude Include="Graphics\Mesh.h" />
+    <ClInclude Include="Graphics\Model.h" />
+    <ClInclude Include="Graphics\Shader.h" />
+    <ClInclude Include="Graphics\Passes\GBufferPass.h" />
+    <ClInclude Include="Graphics\Passes\GBufferDebugPass.h" />
+    <ClInclude Include="Graphics\Passes\DeferredLightingPass.h" />
+    <ClInclude Include="Graphics\Passes\LightingPass.h" />
+    <ClInclude Include="Graphics\Passes\ShadowPass.h" />
+    <ClInclude Include="Graphics\Passes\VoxelDebugPass.h" />
+    <ClInclude Include="Graphics\Passes\VoxelizationPass.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Shaders\shadowMap.vert" /><None Include="Assets\Shaders\shadowMap.frag" />
+    <None Include="Assets\Shaders\voxelization.vert" /><None Include="Assets\Shaders\voxelization.geom" /><None Include="Assets\Shaders\voxelization.frag" />
+    <None Include="Assets\Shaders\voxelVisualization.vert" /><None Include="Assets\Shaders\voxelVisualization.geom" /><None Include="Assets\Shaders\voxelVisualization.frag" />
+    <None Include="Assets\Shaders\render.vert" /><None Include="Assets\Shaders\render.frag" />
+    <None Include="Assets\Shaders\gbuffer.vert" /><None Include="Assets\Shaders\gbuffer.frag" />
+    <None Include="Assets\Shaders\gbuffer_debug.vert" /><None Include="Assets\Shaders\gbuffer_debug.frag" />
+    <None Include="Assets\Shaders\deferred_lighting.vert" /><None Include="Assets\Shaders\deferred_lighting.frag" />
+    <None Include="Assets\Shaders\voxel_resolve.comp" /><None Include="Assets\Shaders\voxel_resolve_cas.comp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets" />
+</Project>

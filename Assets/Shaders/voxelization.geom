@@ -1,0 +1,64 @@
+#version 330 core
+#define M_PI 3.1415926535
+
+layout (triangles) in;
+layout (triangle_strip, max_vertices = 3) out;
+
+uniform mat4 ProjectionFromXAxis;
+uniform mat4 ProjectionFromYAxis;
+uniform mat4 ProjectionFromZAxis;
+
+in VertexData
+{
+    vec3 normal;
+    vec2 texCoord;
+    vec3 positionLightSpace;
+} vertexOut[];
+
+out GeomData
+{
+    vec3 normal;
+    vec2 texCoord;
+    flat int axis;            // 1 represent X, 2 represent Y, 3 represent Z
+    vec3 positionLightSpace;
+} geomOut;
+
+void main()
+{
+    vec3 edge1 = gl_in[1].gl_Position.xyz - gl_in[0].gl_Position.xyz;
+    vec3 edge2 = gl_in[2].gl_Position.xyz - gl_in[0].gl_Position.xyz;
+    vec3 normal = normalize(cross(edge1, edge2));
+
+    float normalX = abs(normal.x);
+    float normalY = abs(normal.y);
+    float normalZ = abs(normal.z);
+
+    mat4 projectionMatrix;
+
+    if(normalX > normalY && normalX > normalZ)
+    {
+        geomOut.axis = 1;
+        projectionMatrix = ProjectionFromXAxis;
+    }
+    else if(normalY > normalX && normalY > normalZ)
+    {
+        geomOut.axis = 2;
+        projectionMatrix = ProjectionFromYAxis;
+    }
+    else
+    {
+        geomOut.axis = 3;
+        projectionMatrix = ProjectionFromZAxis;
+    }
+    
+    for(int i = 0; i < gl_in.length(); i++)
+    {
+        geomOut.normal = vertexOut[i].normal;
+        geomOut.texCoord = vertexOut[i].texCoord;
+        geomOut.positionLightSpace = vertexOut[i].positionLightSpace;
+        gl_Position = projectionMatrix * gl_in[i].gl_Position;
+        EmitVertex();
+    }
+    
+    EndPrimitive();
+}

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Core"><UniqueIdentifier>{D1E764F0-B9EA-44AF-91F7-C652ED3A6F28}</UniqueIdentifier></Filter>
+    <Filter Include="Graphics"><UniqueIdentifier>{FEA7C4B6-BB9F-4D50-9E1F-99C5BAABF887}</UniqueIdentifier></Filter>
+    <Filter Include="Graphics\Passes"><UniqueIdentifier>{C4B2C5B4-E8A2-4E7A-BF48-FFB2E1931C4E}</UniqueIdentifier></Filter>
+    <Filter Include="Assets\Shaders"><UniqueIdentifier>{2CDEB5FE-1B35-4B3C-B9A9-C9D9E8F4A2D0}</UniqueIdentifier></Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Core\Application.cpp"><Filter>Core</Filter></ClCompile>
+    <ClCompile Include="Graphics\Camera.cpp"><Filter>Graphics</Filter></ClCompile>
+    <ClCompile Include="Graphics\Material.cpp"><Filter>Graphics</Filter></ClCompile>
+    <ClCompile Include="Graphics\Mesh.cpp"><Filter>Graphics</Filter></ClCompile>
+    <ClCompile Include="Graphics\Model.cpp"><Filter>Graphics</Filter></ClCompile>
+    <ClCompile Include="Graphics\Shader.cpp"><Filter>Graphics</Filter></ClCompile>
+    <ClCompile Include="Graphics\Passes\GBufferPass.cpp"><Filter>Graphics\Passes</Filter></ClCompile>
+    <ClCompile Include="Graphics\Passes\GBufferDebugPass.cpp"><Filter>Graphics\Passes</Filter></ClCompile>
+    <ClCompile Include="Graphics\Passes\DeferredLightingPass.cpp"><Filter>Graphics\Passes</Filter></ClCompile>
+    <ClCompile Include="Graphics\Passes\LightingPass.cpp"><Filter>Graphics\Passes</Filter></ClCompile>
+    <ClCompile Include="Graphics\Passes\ShadowPass.cpp"><Filter>Graphics\Passes</Filter></ClCompile>
+    <ClCompile Include="Graphics\Passes\VoxelDebugPass.cpp"><Filter>Graphics\Passes</Filter></ClCompile>
+    <ClCompile Include="Graphics\Passes\VoxelizationPass.cpp"><Filter>Graphics\Passes</Filter></ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Core\Application.h"><Filter>Core</Filter></ClInclude>
+    <ClInclude Include="Graphics\Camera.h"><Filter>Graphics</Filter></ClInclude>
+    <ClInclude Include="Graphics\DebugMarkers.h"><Filter>Graphics</Filter></ClInclude>
+    <ClInclude Include="Graphics\Material.h"><Filter>Graphics</Filter></ClInclude>
+    <ClInclude Include="Graphics\Mesh.h"><Filter>Graphics</Filter></ClInclude>
+    <ClInclude Include="Graphics\Model.h"><Filter>Graphics</Filter></ClInclude>
+    <ClInclude Include="Graphics\Shader.h"><Filter>Graphics</Filter></ClInclude>
+    <ClInclude Include="Graphics\Passes\GBufferPass.h"><Filter>Graphics\Passes</Filter></ClInclude>
+    <ClInclude Include="Graphics\Passes\GBufferDebugPass.h"><Filter>Graphics\Passes</Filter></ClInclude>
+    <ClInclude Include="Graphics\Passes\DeferredLightingPass.h"><Filter>Graphics\Passes</Filter></ClInclude>
+    <ClInclude Include="Graphics\Passes\LightingPass.h"><Filter>Graphics\Passes</Filter></ClInclude>
+    <ClInclude Include="Graphics\Passes\ShadowPass.h"><Filter>Graphics\Passes</Filter></ClInclude>
+    <ClInclude Include="Graphics\Passes\VoxelDebugPass.h"><Filter>Graphics\Passes</Filter></ClInclude>
+    <ClInclude Include="Graphics\Passes\VoxelizationPass.h"><Filter>Graphics\Passes</Filter></ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Shaders\shadowMap.vert"><Filter>Assets\Shaders</Filter></None><None Include="Assets\Shaders\shadowMap.frag"><Filter>Assets\Shaders</Filter></None>
+    <None Include="Assets\Shaders\voxelization.vert"><Filter>Assets\Shaders</Filter></None><None Include="Assets\Shaders\voxelization.geom"><Filter>Assets\Shaders</Filter></None><None Include="Assets\Shaders\voxelization.frag"><Filter>Assets\Shaders</Filter></None>
+    <None Include="Assets\Shaders\voxelVisualization.vert"><Filter>Assets\Shaders</Filter></None><None Include="Assets\Shaders\voxelVisualization.geom"><Filter>Assets\Shaders</Filter></None><None Include="Assets\Shaders\voxelVisualization.frag"><Filter>Assets\Shaders</Filter></None>
+    <None Include="Assets\Shaders\render.vert"><Filter>Assets\Shaders</Filter></None><None Include="Assets\Shaders\render.frag"><Filter>Assets\Shaders</Filter></None>
+    <None Include="Assets\Shaders\gbuffer.vert"><Filter>Assets\Shaders</Filter></None><None Include="Assets\Shaders\gbuffer.frag"><Filter>Assets\Shaders</Filter></None>
+    <None Include="Assets\Shaders\gbuffer_debug.vert"><Filter>Assets\Shaders</Filter></None><None Include="Assets\Shaders\gbuffer_debug.frag"><Filter>Assets\Shaders</Filter></None>
+    <None Include="Assets\Shaders\deferred_lighting.vert"><Filter>Assets\Shaders</Filter></None><None Include="Assets\Shaders\deferred_lighting.frag"><Filter>Assets\Shaders</Filter></None>
+    <None Include="Assets\Shaders\voxel_resolve.comp"><Filter>Assets\Shaders</Filter></None><None Include="Assets\Shaders\voxel_resolve_cas.comp"><Filter>Assets\Shaders</Filter></None>
+  </ItemGroup>
+</Project>

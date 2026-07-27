@@ -1,0 +1,31 @@
+#version 430 core
+
+layout(local_size_x = 8, local_size_y = 8, local_size_z = 8) in;
+layout(rgba8, binding = 0) writeonly uniform image3D VoxelTexture;
+
+uniform usampler3D VoxelSumR;
+uniform usampler3D VoxelSumG;
+uniform usampler3D VoxelSumB;
+uniform usampler3D VoxelCount;
+uniform int VoxelDimensions;
+
+const float RadianceScale = 65536.0;
+
+void main()
+{
+    ivec3 voxelPos = ivec3(gl_GlobalInvocationID.xyz);
+    if (any(greaterThanEqual(voxelPos, ivec3(VoxelDimensions)))) return;
+
+    uint count = texelFetch(VoxelCount, voxelPos, 0).r;
+    if (count == 0u) {
+        imageStore(VoxelTexture, voxelPos, vec4(0.0));
+        return;
+    }
+
+    vec3 sum = vec3(
+        float(texelFetch(VoxelSumR, voxelPos, 0).r),
+        float(texelFetch(VoxelSumG, voxelPos, 0).r),
+        float(texelFetch(VoxelSumB, voxelPos, 0).r));
+    vec3 average = sum / RadianceScale / float(count);
+    imageStore(VoxelTexture, voxelPos, vec4(average, 1.0));
+}

@@ -1,0 +1,22 @@
+#version 430 core
+
+// Legacy resolve shader for the packed RGBA8 + CAS accumulation path.
+layout(local_size_x = 8, local_size_y = 8, local_size_z = 8) in;
+layout(rgba8, binding = 0) writeonly uniform image3D VoxelTexture;
+
+uniform usampler3D PackedVoxelTexture;
+uniform int VoxelDimensions;
+
+void main()
+{
+    ivec3 voxelPos = ivec3(gl_GlobalInvocationID.xyz);
+    if (any(greaterThanEqual(voxelPos, ivec3(VoxelDimensions)))) return;
+
+    vec4 average = unpackUnorm4x8(texelFetch(PackedVoxelTexture, voxelPos, 0).r);
+    if (average.a <= 0.0) {
+        imageStore(VoxelTexture, voxelPos, vec4(0.0));
+        return;
+    }
+
+    imageStore(VoxelTexture, voxelPos, vec4(average.rgb, 1.0));
+}
