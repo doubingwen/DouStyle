@@ -28,13 +28,13 @@
       <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)Core;$(ProjectDir)Graphics;$(ProjectDir)..\VXGI-Renderer\vendor\glfw\include;$(ProjectDir)..\VXGI-Renderer\vendor\glew\include;$(ProjectDir)..\VXGI-Renderer\vendor\assimp\include;$(ProjectDir)..\VXGI-Renderer\vendor\glm;$(ProjectDir)..\VXGI-Renderer\vendor\stb;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Core;$(ProjectDir)Graphics;$(ProjectDir)ThirdParty\glfw\include;$(ProjectDir)ThirdParty\glew\include;$(ProjectDir)ThirdParty\assimp\include;$(ProjectDir)ThirdParty\glm;$(ProjectDir)ThirdParty\stb;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>opengl32.lib;$(ProjectDir)..\VXGI-Renderer\vendor\glfw\lib-vc2022\glfw3.lib;$(ProjectDir)..\VXGI-Renderer\vendor\glew\lib\glew32s.lib;$(ProjectDir)..\VXGI-Renderer\vendor\assimp\lib\assimp-vc143-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;$(ProjectDir)ThirdParty\glfw\lib-vc2022\glfw3.lib;$(ProjectDir)ThirdParty\glew\lib\glew32s.lib;$(ProjectDir)ThirdParty\assimp\lib\assimp-vc143-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <PostBuildEvent><Command>copy /Y "$(ProjectDir)..\VXGI-Renderer\vendor\assimp\lib\assimp-vc143-mtd.dll" "$(TargetDir)"</Command></PostBuildEvent>
+    <PostBuildEvent><Command>copy /Y "$(ProjectDir)ThirdParty\assimp\lib\assimp-vc143-mtd.dll" "$(TargetDir)"</Command></PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

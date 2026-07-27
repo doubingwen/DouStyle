@@ -16,3 +16,7 @@ captures/
 *.obj
 *.tlog/
 *.ipch/
+
+# The standalone project keeps its required third-party headers and binaries.
+!ThirdParty/
+!ThirdParty/**
